@@ -1,0 +1,593 @@
+/* Reset padrão */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Variáveis de cor - Paleta CotaWeb */
+:root {
+    --primary-blue: #0052CC;
+    --primary-green: #00D084;
+    --light-gray: #F5F5F5;
+    --medium-gray: #E0E0E0;
+    --dark-gray: #333333;
+    --text-gray: #666666;
+    --border-gray: #CCCCCC;
+    --white: #FFFFFF;
+    --danger-red: #FF4444;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    background-color: var(--light-gray);
+    color: var(--dark-gray);
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.header {
+    background-color: var(--white);
+    border-bottom: 1px solid var(--medium-gray);
+    padding: 1rem 0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.header-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--primary-blue);
+}
+
+.logo-text {
+    color: var(--primary-blue);
+}
+
+.btn-exit {
+    padding: 0.5rem 1rem;
+    border: 1px solid var(--medium-gray);
+    background-color: var(--white);
+    border-radius: 6px;
+    cursor: pointer;
+    color: var(--dark-gray);
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+}
+
+.btn-exit:hover {
+    background-color: var(--light-gray);
+    border-color: var(--border-gray);
+}
+
+.main-content {
+    flex: 1;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+    width: 100%;
+}
+
+.tutorial-section {
+    background-color: var(--white);
+    border-radius: 8px;
+    padding: 2rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.tutorial-title {
+    font-size: 1.3rem;
+    color: var(--text-gray);
+    margin-bottom: 2rem;
+    font-weight: 500;
+}
+
+/* Indicador de progresso dos 4 passos */
+.progress-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 2rem;
+    position: relative;
+    padding: 0 1rem;
+    padding-top: 1rem;
+}
+
+/* Linha conectora entre os passos */
+.progress-container::before {
+    content: '';
+    position: absolute;
+    top: 20px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background-color: var(--medium-gray);
+    z-index: 0;
+}
+
+.progress-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 1;
+    flex: 1;
+    text-align: center;
+    position: relative;
+}
+
+.progress-number {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: var(--medium-gray);
+    color: var(--white);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 1rem;
+    margin-bottom: 0.8rem;
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+}
+
+.progress-item.active .progress-number {
+    background-color: var(--primary-blue);
+    box-shadow: 0 0 0 3px rgba(0, 82, 204, 0.2);
+    transform: scale(1.1);
+}
+
+.progress-item.completed .progress-number {
+    background-color: var(--primary-green);
+    box-shadow: 0 0 0 3px rgba(0, 208, 132, 0.2);
+    transform: scale(1);
+}
+
+.progress-text {
+    font-size: 0.85rem;
+    color: var(--text-gray);
+    max-width: 120px;
+    transition: color 0.3s ease;
+}
+
+.progress-item.active .progress-text {
+    color: var(--primary-blue);
+    font-weight: 600;
+}
+
+.progress-item.completed .progress-text {
+    color: var(--primary-green);
+    font-weight: 500;
+}
+
+.accordion {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+/* Cada passo do tutorial */
+.accordion-item {
+    border: 1px solid var(--medium-gray);
+    border-radius: 8px;
+    overflow: hidden;
+    transition: all 0.4s ease;
+}
+
+/* Passo aberto */
+.accordion-item.active {
+    border-color: var(--primary-blue);
+    box-shadow: 0 2px 8px rgba(0, 82, 204, 0.1);
+}
+
+/* Passo já completado */
+.accordion-item.completed {
+    border-color: #E8E8E8;
+    box-shadow: none;
+}
+
+/* Cabeçalho do accordion (título do passo) */
+.accordion-header {
+    width: 100%;
+    padding: 1.5rem;
+    background-color: var(--primary-blue);
+    color: var(--white);
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    transition: all 0.3s ease;
+    font-size: 1.1rem;
+    font-weight: 500;
+    text-align: left;
+}
+
+.accordion-item.completed .accordion-header {
+    background-color: #D3D3D3;
+    color: var(--white);
+    border-left: none;
+    padding-left: 1.2rem;
+}
+
+.accordion-item.completed .accordion-header .accordion-title {
+    color: var(--white);
+}
+
+.accordion-item.completed .accordion-header .accordion-icon,
+.accordion-item.completed .accordion-header .accordion-arrow {
+    color: var(--white);
+}
+
+.accordion-item.completed .accordion-description {
+    color: var(--white);
+}
+
+.accordion-header:hover {
+    background-color: #0042A3;
+}
+
+.accordion-icon {
+    font-size: 1.4rem;
+}
+
+.accordion-title {
+    font-weight: 700;
+    color: var(--white);
+    flex: 1;
+    transition: color 0.3s ease;
+    font-size: 1.05rem;
+}
+
+.accordion-description {
+    font-size: 0.8rem;
+    color: var(--white);
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.accordion-arrow {
+    color: var(--white);
+    transition: transform 0.4s ease;
+}
+
+.accordion-item.active .accordion-arrow {
+    transform: rotate(180deg);
+}
+
+.accordion-check {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background-color: var(--primary-green);
+    color: var(--white);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.85rem;
+    font-weight: 700;
+    margin-left: 0.5rem;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.accordion-check.visible {
+    opacity: 1;
+}
+
+@keyframes slideDown {
+    from { opacity: 0; max-height: 0; overflow: hidden; }
+    to { opacity: 1; max-height: 1000px; overflow: visible; }
+}
+
+@keyframes slideUp {
+    from { opacity: 1; max-height: 1000px; overflow: visible; }
+    to { opacity: 0; max-height: 0; overflow: hidden; }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Conteúdo do accordion (formulários e tabelas) */
+.accordion-content {
+    padding: 1.5rem;
+    background-color: var(--white);
+    max-height: 0;
+    overflow: hidden;
+    border-top: 1px solid var(--medium-gray);
+    opacity: 0;
+    transition: all 0.4s ease;
+}
+
+/* Abre o conteúdo quando o accordion está ativo */
+.accordion-item.active .accordion-content {
+    max-height: 1000px;
+    opacity: 1;
+    animation: slideDown 0.4s ease forwards;
+}
+
+.form-section {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.form-section h3 {
+    font-size: 1.1rem;
+    color: var(--dark-gray);
+    margin-top: 0.5rem;
+}
+
+.form-description {
+    font-size: 0.9rem;
+    color: var(--text-gray);
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.form-group label {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--dark-gray);
+}
+
+.required {
+    color: var(--danger-red);
+}
+
+.input-wrapper {
+    display: flex;
+    align-items: center;
+    border: 1px solid var(--medium-gray);
+    border-radius: 6px;
+    padding: 0.75rem;
+    background-color: var(--white);
+    transition: all 0.3s ease;
+}
+
+.input-wrapper:focus-within {
+    border-color: var(--primary-blue);
+    box-shadow: 0 0 0 3px rgba(0, 82, 204, 0.1);
+}
+
+.input-icon {
+    margin-right: 0.8rem;
+    font-size: 1.1rem;
+    color: var(--text-gray);
+}
+
+.input-wrapper input {
+    flex: 1;
+    border: none;
+    outline: none;
+    font-size: 0.95rem;
+    color: var(--dark-gray);
+    background: transparent;
+}
+
+.input-wrapper input::placeholder {
+    color: var(--border-gray);
+}
+
+select {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    color: var(--dark-gray);
+    background-color: var(--white);
+    transition: all 0.3s ease;
+}
+
+select:focus {
+    outline: none;
+    border-color: var(--primary-blue);
+    box-shadow: 0 0 0 3px rgba(0, 82, 204, 0.1);
+}
+
+select:hover {
+    border-color: var(--border-gray);
+}
+
+.btn-save {
+    background-color: var(--primary-green);
+    color: var(--white);
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    align-self: flex-end;
+}
+
+.btn-save:hover {
+    background-color: #00B872;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 208, 132, 0.3);
+}
+
+.btn-save:active {
+    transform: translateY(0);
+}
+
+.btn-primary {
+    background-color: var(--primary-blue);
+    color: var(--white);
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: #0042A3;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 82, 204, 0.3);
+}
+
+.btn-secondary {
+    background-color: var(--white);
+    color: var(--dark-gray);
+    border: 1px solid var(--medium-gray);
+    padding: 0.75rem 1.5rem;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-secondary:hover {
+    background-color: var(--light-gray);
+    border-color: var(--border-gray);
+}
+
+.btn-danger {
+    background-color: var(--danger-red);
+    color: var(--white);
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-danger:hover {
+    background-color: #DD3333;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(255, 68, 68, 0.3);
+}
+
+table {
+    font-size: 0.9rem;
+}
+
+table th {
+    background-color: var(--light-gray);
+    font-weight: 600;
+    color: var(--dark-gray);
+}
+
+table td {
+    color: var(--dark-gray);
+}
+
+table tbody tr:hover {
+    background-color: #FAFAFA;
+}
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+}
+
+.modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+    background-color: var(--white);
+    border-radius: 12px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+}
+
+.modal-content {
+    padding: 2rem;
+    max-width: 400px;
+    text-align: center;
+}
+
+.modal-content.product-form {
+    max-width: 500px;
+    text-align: left;
+}
+
+.modal-content h2 {
+    font-size: 1.3rem;
+    color: var(--dark-gray);
+    margin-bottom: 1rem;
+}
+
+.modal-content p {
+    color: var(--text-gray);
+    margin-bottom: 2rem;
+    font-size: 0.95rem;
+}
+
+.modal-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+}
+
+.modal-actions button {
+    flex: 1;
+}
+
+@media (max-width: 768px) {
+    .progress-container {
+        flex-direction: column;
+        gap: 1.5rem;
+        padding: 1rem 0;
+    }
+
+    .progress-container::before { display: none; }
+
+    .progress-item { width: 100%; }
+
+    .accordion-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+
+    .accordion-description {
+        margin: 0;
+        margin-left: 2rem;
+    }
+
+    .main-content { padding: 1rem; }
+    .tutorial-section { padding: 1rem; }
+
+    .modal-actions { flex-direction: column; }
+}
+
+@media (max-width: 480px) {
+    .header-content { flex-direction: column; gap: 1rem; }
+    .tutorial-title { font-size: 1.1rem; }
+    .progress-number { width: 35px; height: 35px; font-size: 0.9rem; }
+    .progress-text { font-size: 0.75rem; max-width: 100px; }
+    .btn-save { width: 100%; }
+    .modal-content { padding: 1.5rem; max-width: 90%; }
+}

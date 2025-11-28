@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CotaWeb - Tutorial Onboard</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header com logo e botão de logout -->
+        <header class="header">
+            <div class="header-content">
+                <div class="logo">
+                    <span class="logo-text">CotaWeb</span>
+                </div>
+                <button class="btn-exit" onclick="handleExit()">Sair</button>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <div style="position: relative;">
+                <button onclick="handleExitTutorial()" style="position: absolute; top: 0; right: 0; background: none; border: none; font-size: 1.8rem; cursor: pointer; color: var(--text-gray); padding: 0; margin: 1rem; transition: color 0.3s ease;" onmouseover="this.style.color='var(--danger-red)'" onmouseout="this.style.color='var(--text-gray)'" title="Sair do tutorial">&times;</button>
+
+                <div class="tutorial-section">
+                    <h1 class="tutorial-title">Comece por aqui: o caminho mais simples para usar o CotaWeb</h1>
+
+                    <!-- Indicador de progresso dos 4 passos -->
+                    <div class="progress-container">
+                        <div class="progress-item active">
+                            <span class="progress-number">1</span>
+                            <span class="progress-text">Cadastre seus fornecedores</span>
+                        </div>
+                        <div class="progress-item">
+                            <span class="progress-number">2</span>
+                            <span class="progress-text">Cadastre seus produtos</span>
+                        </div>
+                        <div class="progress-item">
+                            <span class="progress-number">3</span>
+                            <span class="progress-text">Crie uma cotação</span>
+                        </div>
+                        <div class="progress-item">
+                            <span class="progress-number">4</span>
+                            <span class="progress-text">Envie para seus fornecedores</span>
+                        </div>
+                    </div>
+
+                    <!-- Cada passo do tutorial é um accordion -->
+                    <div class="accordion">
+                        <!-- Passo 1: Novo fornecedor -->
+                        <div class="accordion-item active">
+                            <button class="accordion-header" onclick="toggleAccordion(0)">
+                                <span class="accordion-title">1º passo — Novo fornecedor</span>
+                                <span class="accordion-description">Acesse "Fornecedores" no menu lateral.</span>
+                                <span class="accordion-arrow">▾</span>
+                                <span class="accordion-check" id="check-1">&check;</span>
+                            </button>
+                            <div class="accordion-content">
+                                <div class="form-section">
+                                    <h3>Novo fornecedor</h3>
+                                    <p class="form-description">Preencha os dados essenciais para cadastrar o fornecedor.</p>
+
+                                    <div class="form-group">
+                                        <label for="responsavel">Nome do responsável <span class="required">*</span></label>
+                                        <div class="input-wrapper">
+                                            <input type="text" id="responsavel" placeholder="Nome completo" required>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="empresa">Empresa <span class="required">*</span></label>
+                                        <div class="input-wrapper">
+                                            <input type="text" id="empresa" placeholder="Nome da empresa" required>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="telefone">Telefone/WhatsApp <span class="required">*</span></label>
+                                        <div class="input-wrapper">
+                                            <input type="tel" id="telefone" placeholder="(11) 99999-9999" required>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="cnpj">CNPJ</label>
+                                        <div class="input-wrapper">
+                                            <input type="text" id="cnpj" placeholder="00.000.000/0000-00">
+                                        </div>
+                                    </div>
+
+                                    <button class="btn-save" onclick="handleSave()">Salvar</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Passo 2: Cadastro de produtos -->
+                        <div class="accordion-item">
+                            <button class="accordion-header" onclick="toggleAccordion(1)">
+                                <span class="accordion-title">2º passo — Cadastre seus produtos</span>
+                                <span class="accordion-description">Inclua os itens que você pretende cotar.</span>
+                                <span class="accordion-arrow">▾</span>
+                                <span class="accordion-check" id="check-2">&check;</span>
+                            </button>
+                            <div class="accordion-content">
+                                <div class="form-section">
+                                    <h3>Lista de produtos</h3>
+                                    <p class="form-description">Adicione produtos para usar nas suas cotações.</p>
+
+                                    <div style="display: flex; gap: 1rem; margin-bottom: 1.5rem;">
+                                        <div class="input-wrapper" style="flex: 1;">
+                                            <input type="text" placeholder="Pesquisar produtos...">
+                                        </div>
+                                        <button class="btn-primary" onclick="openProductModal()" style="align-self: auto;">+ Novo produto</button>
+                                    </div>
+
+                                    <div style="border: 1px solid var(--medium-gray); border-radius: 8px; overflow: hidden;">
+                                        <table class="products-table" style="width: 100%; border-collapse: collapse;">
+                                            <thead>
+                                                <tr style="background-color: var(--light-gray);">
+                                                    <th style="padding: 1rem; text-align: left; font-weight: 600; color: var(--dark-gray); border-bottom: 1px solid var(--medium-gray);">Produto</th>
+                                                    <th style="padding: 1rem; text-align: left; font-weight: 600; color: var(--dark-gray); border-bottom: 1px solid var(--medium-gray);">Marca</th>
+                                                    <th style="padding: 1rem; text-align: center; font-weight: 600; color: var(--dark-gray); border-bottom: 1px solid var(--medium-gray);">Ação</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr style="border-bottom: 1px solid var(--medium-gray);">
+                                                    <td style="padding: 1rem; color: var(--dark-gray);">Nenhum produto cadastrado</td>
+                                                    <td style="padding: 1rem;"></td>
+                                                    <td style="padding: 1rem; text-align: center;"></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                    <button class="btn-save" onclick="handleSave()" style="margin-top: 1.5rem;">Salvar</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Passo 3: Criação de cotação -->
+                        <div class="accordion-item">
+                            <button class="accordion-header" onclick="toggleAccordion(2)">
+                                <span class="accordion-title">3º passo — Crie uma cotação</span>
+                                <span class="accordion-description">Selecione os produtos e gere sua cotação.</span>
+                                <span class="accordion-arrow">▾</span>
+                                <span class="accordion-check" id="check-3">&check;</span>
+                            </button>
+                            <div class="accordion-content">
+                                <div class="form-section">
+                                    <h3>Nova cotação</h3>
+                                    <p class="form-description">Monte uma cotação com os seus produtos.</p>
+
+                                    <div style="background-color: var(--light-gray); padding: 1rem; border-radius: 8px; margin-bottom: 1.5rem;">
+                                        <p style="font-size: 0.9rem; color: var(--text-gray); margin-bottom: 0.5rem;">Cotação atual:</p>
+                                        <h3 style="font-size: 1.2rem; color: var(--dark-gray); font-weight: 600;">Cotação 09/09/2025</h3>
+                                        <p style="font-size: 0.85rem; color: var(--text-gray); margin-top: 0.5rem;">Fechamento: sem data definida</p>
+                                    </div>
+
+                                    <div style="border: 1px solid var(--medium-gray); border-radius: 8px; overflow: hidden; margin-bottom: 1.5rem;">
+                                        <table style="width: 100%; border-collapse: collapse;">
+                                            <thead>
+                                                <tr style="background-color: var(--light-gray);">
+                                                    <th style="padding: 1rem; text-align: left; font-weight: 600; color: var(--dark-gray); border-bottom: 1px solid var(--medium-gray);">Produto</th>
+                                                    <th style="padding: 1rem; text-align: left; font-weight: 600; color: var(--dark-gray); border-bottom: 1px solid var(--medium-gray);">Marca</th>
+                                                    <th style="padding: 1rem; text-align: center; font-weight: 600; color: var(--dark-gray); border-bottom: 1px solid var(--medium-gray);">Quantidade</th>
+                                                    <th style="padding: 1rem; text-align: center; font-weight: 600; color: var(--dark-gray); border-bottom: 1px solid var(--medium-gray);">Ofertas</th>
+                                                    <th style="padding: 1rem; text-align: center; font-weight: 600; color: var(--dark-gray); border-bottom: 1px solid var(--medium-gray);">Ação</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr style="border-bottom: 1px solid var(--medium-gray);">
+                                                    <td style="padding: 1rem; color: var(--dark-gray);">Nenhum produto selecionado</td>
+                                                    <td style="padding: 1rem;"></td>
+                                                    <td style="padding: 1rem;"></td>
+                                                    <td style="padding: 1rem;"></td>
+                                                    <td style="padding: 1rem;"></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                    <button class="btn-save" onclick="handleSave()" style="margin-top: 1.5rem;">Salvar</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Passo 4: Envio da cotação -->
+                        <div class="accordion-item">
+                            <button class="accordion-header" onclick="toggleAccordion(3)">
+                                <span class="accordion-title">4º passo — Envie sua cotação</span>
+                                <span class="accordion-description">Escolha os fornecedores que receberão a cotação.</span>
+                                <span class="accordion-arrow">▾</span>
+                                <span class="accordion-check" id="check-4">&check;</span>
+                            </button>
+                            <div class="accordion-content">
+                                <div class="form-section">
+                                    <h3>Enviar cotação</h3>
+                                    <p class="form-description">Selecione quem deve receber esta cotação.</p>
+
+                                    <div style="display: flex; gap: 1rem; margin-bottom: 1.5rem;">
+                                        <div class="input-wrapper" style="flex: 1;">
+                                            <input type="text" placeholder="Pesquisar fornecedores...">
+                                        </div>
+                                    </div>
+
+                                    <div style="border: 1px solid var(--medium-gray); border-radius: 8px; overflow: hidden; margin-bottom: 1.5rem;">
+                                        <table style="width: 100%; border-collapse: collapse;">
+                                            <thead>
+                                                <tr style="background-color: var(--light-gray);">
+                                                    <th style="padding: 1rem; text-align: center; font-weight: 600; color: var(--dark-gray); border-bottom: 1px solid var(--medium-gray); width: 40px;"></th>
+                                                    <th style="padding: 1rem; text-align: left; font-weight: 600; color: var(--dark-gray); border-bottom: 1px solid var(--medium-gray);">Empresa</th>
+                                                    <th style="padding: 1rem; text-align: left; font-weight: 600; color: var(--dark-gray); border-bottom: 1px solid var(--medium-gray);">Vendedor</th>
+                                                    <th style="padding: 1rem; text-align: left; font-weight: 600; color: var(--dark-gray); border-bottom: 1px solid var(--medium-gray);">E-mail</th>
+                                                    <th style="padding: 1rem; text-align: left; font-weight: 600; color: var(--dark-gray); border-bottom: 1px solid var(--medium-gray);">Telefone</th>
+                                                    <th style="padding: 1rem; text-align: left; font-weight: 600; color: var(--dark-gray); border-bottom: 1px solid var(--medium-gray);">Departamentos</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr style="border-bottom: 1px solid var(--medium-gray);">
+                                                    <td style="padding: 1rem; text-align: center;">
+                                                        <input type="checkbox" style="width: 18px; height: 18px; cursor: pointer;">
+                                                    </td>
+                                                    <td style="padding: 1rem; color: var(--dark-gray); font-weight: 600;">COM. ALV. LIMPEZA E DESCARTÁVEIS LTDA</td>
+                                                    <td style="padding: 1rem; color: var(--dark-gray);">Maicon — Material de Limpeza e Descartáveis</td>
+                                                    <td style="padding: 1rem; color: var(--primary-blue); text-decoration: underline; cursor: pointer;">maicon.ramos@calorada.com.br</td>
+                                                    <td style="padding: 1rem; color: var(--dark-gray);">(61) 99635-1606</td>
+                                                    <td style="padding: 1rem; color: var(--dark-gray);">Material de Limpeza</td>
+                                                </tr>
+                                                <tr style="border-bottom: 1px solid var(--medium-gray);">
+                                                    <td style="padding: 1rem; text-align: center;">
+                                                        <input type="checkbox" style="width: 18px; height: 18px; cursor: pointer;">
+                                                    </td>
+                                                    <td style="padding: 1rem; color: var(--dark-gray); font-weight: 600;">CRISTIANO DUTRA BEZERRA</td>
+                                                    <td style="padding: 1rem; color: var(--dark-gray);">Cristiano — Hortifrúti (Frutas)</td>
+                                                    <td style="padding: 1rem; color: var(--primary-blue); text-decoration: underline; cursor: pointer;">crhortifrut.adm@gmail.com</td>
+                                                    <td style="padding: 1rem; color: var(--dark-gray);">(61) 98258-8300</td>
+                                                    <td style="padding: 1rem; color: var(--dark-gray);">Frutas e verduras</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                    <p style="font-size: 0.85rem; color: var(--text-gray); margin-bottom: 1.5rem;">Mostrando 1 a 2 de 2 registros</p>
+
+                                    <button class="btn-save" onclick="handleSave()" style="align-self: flex-end;">Enviar para selecionados</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Botão de finalizar (aparece após 3 passos) -->
+                        <div id="finalizarContainer" style="display: none; margin-top: 2rem; text-align: center;">
+                            <p id="mensagemFinalizacao" style="color: var(--text-gray); font-size: 0.9rem; margin-bottom: 1rem;"></p>
+                            <button class="btn-primary" onclick="finalizarTutorial()" style="font-size: 1.1rem; padding: 1rem 2rem;">Finalizar tutorial</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modal de confirmação para sair do tutorial -->
+    <div class="modal" id="confirmModal" style="display: none;">
+        <div class="modal-content">
+            <h2>Deseja sair do tutorial?</h2>
+            <p>Você perderá o progresso atual, mas encontrará ele novamente no menu lateral.</p>
+            <div class="modal-actions">
+                <button class="btn-secondary" onclick="closeModals()">Cancelar</button>
+                <button class="btn-danger" onclick="confirmExitTutorial()">Sair</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de logout -->
+    <div class="modal" id="logoutModal" style="display: none;">
+        <div class="modal-content">
+            <h2>Deslogar</h2>
+            <p>Tem certeza de que deseja sair?</p>
+            <div class="modal-actions">
+                <button class="btn-secondary" onclick="handleCancelLogout()">Cancelar</button>
+                <button class="btn-danger" onclick="handleConfirmLogout()">Sair</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para adicionar novo produto (Passo 2) -->
+    <div class="modal" id="productModal" style="display: none;">
+        <div class="modal-content" style="max-width: 500px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                <h2 style="margin: 0;">Novo produto</h2>
+                <button onclick="closeProductModal()" style="background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--text-gray);">&times;</button>
+            </div>
+
+            <div class="form-section" style="gap: 1rem;">
+                <div class="form-group">
+                    <label>Imagem do produto</label>
+                    <div style="border: 2px dashed var(--medium-gray); border-radius: 8px; padding: 2rem; text-align: center; cursor: pointer; transition: all 0.3s ease;" onmouseover="this.style.backgroundColor='var(--light-gray)'" onmouseout="this.style.backgroundColor='transparent'">
+                        <p style="color: var(--text-gray); font-size: 0.9rem; margin: 0;">Clique para fazer upload</p>
+                        <p style="color: var(--border-gray); font-size: 0.8rem; margin: 0.5rem 0 0 0;">Formatos: .jpg, .png, .gif</p>
+                        <p style="color: var(--border-gray); font-size: 0.8rem; margin: 0;">Máx.: 1 MB</p>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="productName">Nome do produto <span class="required">*</span></label>
+                    <div class="input-wrapper">
+                        <input type="text" id="productName" placeholder="Nome do produto" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="productBrand">Marca <span class="required">*</span></label>
+                    <div class="input-wrapper">
+                        <input type="text" id="productBrand" placeholder="Marca do produto" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="productEAN">Código EAN</label>
+                    <div class="input-wrapper">
+                        <input type="text" id="productEAN" placeholder="Código de barras">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="productGroup">Grupos <span class="required">*</span></label>
+                    <select id="productGroup" style="width: 100%; padding: 0.75rem; border: 1px solid var(--medium-gray); border-radius: 6px; font-size: 0.95rem; cursor: pointer;">
+                        <option value="">Selecione um grupo</option>
+                        <option value="limpeza">Material de Limpeza</option>
+                        <option value="alimentos">Alimentos</option>
+                        <option value="bebidas">Bebidas</option>
+                        <option value="descartaveis">Descartáveis</option>
+                    </select>
+                </div>
+
+                <div style="display: flex; gap: 1rem; margin-top: 1.5rem;">
+                    <button class="btn-secondary" onclick="closeProductModal()" style="flex: 1;">Fechar</button>
+                    <button class="btn-save" onclick="handleAddProduct()" style="flex: 1; align-self: auto;">Cadastrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="modalOverlay" style="display: none;" onclick="closeModals()"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>
